@@ -59,7 +59,7 @@ body {
 
 .movie {
     width: 240px;
-    margin: 10px;
+    margin: 25px 5px;
     position: relative;
 }
 
@@ -92,8 +92,13 @@ body {
 }
 
 .movie__info {
-    padding: 10px 0;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30%;
+    border: none;
+    padding: 10px 0 5px;
+    box-sizing: border-box;
 }
 
 .movie__title {
@@ -104,6 +109,7 @@ body {
 .movie__category {
     font-size: 14px;
     color: #ffd80e;
+    padding-bottom: 10px;
 }
 
 .movie__avarage {
@@ -132,4 +138,21 @@ body {
 
 .moviea__average--red {
     border: 1px solid red;
+}
+
+.favorite_icon_btn {
+    background: url(/img/favorites.png) no-repeat;
+    border: none;
+    background-size: 30px;
+    background-color: transparent;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: 10px
+}
+
+.favorite_icon_btn:hover {
+    border: 1px solid #1a101f;
+    border-radius: 50%;
 }

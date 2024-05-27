@@ -23,17 +23,18 @@ async function getMovies(url, key) {
     } catch (error) {
         console.log(error);
     }
+}
 
-    function showMovies(data) {
-        const moviesEl = document.querySelector(".movies");
+function showMovies(data) {
+    const moviesEl = document.querySelector(".movies");
 
-        document.querySelector('.movies').innerHTML = '';
+    document.querySelector('.movies').innerHTML = '';
 
-        data.forEach((movie) => {
-            const movieEl = document.createElement("div");
-            movieEl.classList.add("movie");
-            movieEl.innerHTML =
-                `<div class="movie__cover-inner">
+    data.forEach((movie) => {
+        const movieEl = document.createElement("div");
+        movieEl.classList.add("movie");
+        movieEl.innerHTML =
+            `<div class="movie__cover-inner">
                     <img src = "${movie.posterUrlPreview}"
                         alt = "${movie.nameRu}"
                         class = "movie_cover" />
@@ -44,46 +45,45 @@ async function getMovies(url, key) {
                     <div class="movie__title">${movie.nameRu}</div>
                     <div class="movie__category">${movie.genres.map(genre => ` ${genre.genre}`)}</div>
                     <div class="movie__avarage moviea__average--green">${movie.ratingKinopoisk}</div>
+                    <button class="favorite_icon_btn"></button>
             </div>`;
-            moviesEl.appendChild(movieEl);
-        });
-    }
-
-    const form = document.querySelector("form");
-    const search = document.querySelector('.header__search');
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const apiSearchUrl = `${API_URL_SEARCH}${search.value}`
-        if (search.value) {
-            getMovies(apiSearchUrl, 'films');
-            search.value = '';
-        }
-    })
-
-    const premieres = document.querySelector('.premieres');
-
-    premieres.addEventListener('click', () => {
-        getMovies(API_URL_PREMIERES, 'items');
-    })
-
-    const releases = document.querySelector('.releases');
-
-    releases.addEventListener('click', () => {
-        getMovies(API_URL_CLOSES_RELEASES, 'items')
-    })
-
-    const popular_movie = document.querySelector('.popular_movie');
-
-    popular_movie.addEventListener('click', () => {
-        getMovies(API_URL_TOP_MOVIES, 'items')
-    })
-
-    const releases_month = document.querySelector('.releases_month');
-
-    releases_month.addEventListener('click', () => {
-        getMovies(API_URL_MONTH_RELEASES, 'releases')
-    })
-
+        moviesEl.appendChild(movieEl);
+    });
 }
+
+const form = document.querySelector("form");
+const search = document.querySelector('.header__search');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const apiSearchUrl = `${API_URL_SEARCH}${search.value}`
+    if (search.value) {
+        getMovies(apiSearchUrl, 'films');
+        search.value = '';
+    }
+})
+
+const premieres = document.querySelector('.premieres');
+
+premieres.addEventListener('click', () => {
+    getMovies(API_URL_PREMIERES, 'items');
+})
+
+const releases = document.querySelector('.releases');
+
+releases.addEventListener('click', () => {
+    getMovies(API_URL_CLOSES_RELEASES, 'items')
+})
+
+const popular_movie = document.querySelector('.popular_movie');
+
+popular_movie.addEventListener('click', () => {
+    getMovies(API_URL_TOP_MOVIES, 'items')
+})
+
+const releases_month = document.querySelector('.releases_month');
+
+releases_month.addEventListener('click', () => {
+    getMovies(API_URL_MONTH_RELEASES, 'releases')
+});
