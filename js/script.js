@@ -35,20 +35,44 @@ function showMovies(data) {
         movieEl.classList.add("movie");
         movieEl.innerHTML =
             `<div class="movie__cover-inner">
-                    <img src = "${movie.posterUrlPreview}"
-                        alt = "${movie.nameRu}"
-                        class = "movie_cover" />
+                    <img src="${movie.posterUrlPreview}"
+                        alt="${movie.nameRu}"
+                        class="movie_cover" />
                     <div class="movie_cover--darkned"></div>
             </div>
 
             <div class="movie__info">
                     <div class="movie__title">${movie.nameRu}</div>
-                    <div class="movie__category">${movie.genres.map(genre => ` ${genre.genre}`)}</div>
-                    <div class="movie__avarage moviea__average--green">${movie.ratingKinopoisk}</div>
-                    <button class="favorite_icon_btn"></button>
+                    <div class="movie__category">${movie.genres.map(genre => ` ${genre.genre}`).join(', ')}</div>
+                    <div class="movie__avarage movie__average--green">${movie.ratingKinopoisk}</div>
+                    <button class="favorite_icon_btn" data-movie='${JSON.stringify(movie)}'></button>
             </div>`;
         moviesEl.appendChild(movieEl);
     });
+
+    document.querySelectorAll('.favorite_icon_btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const movie = JSON.parse(button.getAttribute('data-movie'));
+            addFavoriteMovie(movie);
+        });
+    });
+}
+
+function addFavoriteMovie(movie) {
+    const favorites = getFavoriteMovies();
+    if (!favorites.some(fav => fav.filmId === movie.filmId)) {
+        favorites.push(movie);
+        localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
+    }
+}
+
+function getFavoriteMovies() {
+    return JSON.parse(localStorage.getItem('favoriteMovies')) || [];
+}
+
+function showFavoriteMovies() {
+    const favorites = getFavoriteMovies();
+    showMovies(favorites);
 }
 
 const form = document.querySelector("form");
@@ -86,4 +110,10 @@ const releases_month = document.querySelector('.releases_month');
 
 releases_month.addEventListener('click', () => {
     getMovies(API_URL_MONTH_RELEASES, 'releases')
+});
+
+const favorite = document.querySelector('.favorite_movies');
+
+favorite.addEventListener('click', () => {
+    showFavoriteMovies();
 });
